@@ -13,4 +13,4 @@ class Index:
 
 if __name__ == "__main__":
     app = web.application(urls, globals())
-    app.run(port=8800)
+    app.run()
