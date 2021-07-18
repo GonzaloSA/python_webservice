@@ -30,7 +30,7 @@ def descarga_serie_banxico():
     data['banxico'] = []
 
     for inf in bx['datos']:
-        data["banxico"].append({"Fecha":inf['fecha'], "Valor":inf['dato']})
+        data["banxico"].append({"Fecha":inf['fecha'], "Valor":float(inf['dato']}))
     #resp = json.dumps(data)
     return data
 
