@@ -36,14 +36,23 @@ def descarga_serie_banxico():
 
 def descarga_serie_fixer():
     key = '4d8bd26cdc483c10f32c9c5bcf549f7b'
-    url_f = 'http://data.fixer.io/api/'+fecha_fin+'?access_key='+key+'&symbols=MXN,USD'
-    print(url_f)
-    response = requests.get(url_f)
-    status = response.status_code
-    if status != 200:
-        return 'Ha ocurrido un error en la consulta'
-    raw_data1 = response.json()
-    return raw_data1
+
+    lista_fechas = [inicio + datetime.timedelta(days=d) for d in range((fin - inicio).days + 1)] 
+    data= {}
+    data['fixer'] = []
+    for dia in lista_fechas:
+        d =dia.strftime("%Y-%m-%d")
+        #print(dia.strftime("%Y-%m-%d"))
+        url_f = 'http://data.fixer.io/api/'+d+'?access_key='+key+'&symbols=MXN,USD'
+        response = requests.get(url_f).json()
+        status = response['success']
+        if status != True:
+            return 'Ha ocurrido un error en la consulta'
+        #print(response['rates']['MXN'])
+        cambio = float(response['rates']['MXN'])/float(response['rates']['USD'])
+        data["fixer"].append({"Fecha":dia.strftime("%d-%m-%Y"), "Valor":round(cambio,4)})
+
+    return data
 
 
 def descargaScrapper():
@@ -61,17 +70,19 @@ def descargaScrapper():
     #resp = json.dumps(data)
     return data
 
+
+
 def consulta():
     dt = {}
     dt['tarifas'] = []
     dt['tarifas'].append(descargaScrapper())
     dt['tarifas'].append(descarga_serie_banxico())
+    dt['tarifas'].append(descarga_serie_fixer())
     
-    resp = json.dumps(dt,  indent=4)
+    resp = json.dumps(dt,  indent=2)
     return resp
 
 #print(consulta())
-
 """
 print('Datos BANXICO')
 mis_datos = descarga_serie_banxico()
@@ -81,9 +92,8 @@ datos_DOF = descargaScrapper()
 print(datos_DOF)
 
 
+
 print('Datos FIXER')
 datos_fixer = descarga_serie_fixer()
-print(datos_fixer)
+print(datos_fixer)"""
 
-
-"""
