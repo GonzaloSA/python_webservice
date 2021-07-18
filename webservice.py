@@ -1,14 +1,13 @@
 import web
 import json
+import fuentes_bx
 
 urls = (
     '/', 'Index'
 )
 class Index:
     def GET(self):
-        response =json.dumps( {
-        'mensaje': 'Hola Mundo chido'
-        })
+        response =fuentes_bx.consulta()
         return response
 
 if __name__ == "__main__":
