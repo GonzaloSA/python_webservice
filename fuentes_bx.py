@@ -68,7 +68,7 @@ class Solicitudes:
             response = requests.get(url_f).json()
             status = response['success']
             if status != True:
-                return 'Ha ocurrido un error en la consulta'
+                return 'Ha ocurrido un error en la consulta--' + response['error']['type']+'--'
             #Se calcula el tipo de cambio con los valores devueltos,  por configuracion de cueta Fixer no permite utilizar el parametro base
             cambio = float(response['rates']['MXN'])/float(response['rates']['USD'])
             #Se escribe el archivo json
@@ -107,3 +107,4 @@ def consulta():
     
     resp = json.dumps(dt,  indent=2)
     return resp
+
