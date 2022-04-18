@@ -13,7 +13,7 @@ La aplicación esta implementada sobre un servidor Heroku en el link:
 
 Este codigo muestra ejemplos de:
 - Documentacion
-- OOP
+- POO
 - Solicitudes HTTP
 - Lectura y escritura de archivos json
 - Python web scraping
